@@ -32,4 +32,4 @@ const userSchema = new Schema<User>({
   orders: [ordersSchema],
 });
 
-const User = model<User>('User', userSchema);
+export const UserModel = model<User>('User', userSchema);
