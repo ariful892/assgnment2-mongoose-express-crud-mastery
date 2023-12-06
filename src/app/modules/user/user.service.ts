@@ -11,13 +11,31 @@ const getAllUsersFromDB = async () => {
   return result;
 };
 
-const getSingleUserFromDB = async (id: string) => {
-  const result = await UserModel.findOne({ id });
+const getSingleUserFromDB = async (userId: string) => {
+  const result = await UserModel.findOne({ userId });
   return result;
+};
+
+const updateSingleUserfromDB = async (userId: string) => {
+  const filter = { userId: userId };
+  const update = { $set: { user: 'VALUE' } };
+
+  UserModel.updateOne(
+    filter,
+    update,
+    //  (err:string, result)=> {
+    //   if (err) {
+    //     console.error('Error updating document:', err);
+    //   } else {
+    //     console.log('Update result:', result);
+    //   }
+    // },
+  );
 };
 
 export const UserServices = {
   createUserIntoDB,
   getAllUsersFromDB,
   getSingleUserFromDB,
+  updateSingleUserfromDB,
 };

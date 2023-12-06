@@ -25,8 +25,8 @@ export type User = {
   fullName: FullName;
   age: number;
   email: string;
-  isActive: boolean;
   hobbies: string[];
   address: Address;
   orders: Orders[];
+  isActive: 'active' | 'inActive';
 };
