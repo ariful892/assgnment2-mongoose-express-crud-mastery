@@ -13,6 +13,9 @@ const getAllUsersFromDB = async () => {
 
 const getSingleUserFromDB = async (userId: string) => {
   const result = await UserModel.findOne({ userId });
+
+  // const result = await UserModel.aggregate([{ $match: { userId:userId } }]);
+
   return result;
 };
 
@@ -22,9 +25,24 @@ const deleteUserFromDB = async (userId: string) => {
   return result;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const addOrderIntoDB = async (orderInfo: any) => {
+  const result = await UserModel.updateOne(
+    { userId: orderInfo.userId },
+    {
+      $addToSet: {
+        orders: orderInfo.order,
+      },
+    },
+  );
+
+  return result;
+};
+
 export const UserServices = {
   createUserIntoDB,
   getAllUsersFromDB,
   getSingleUserFromDB,
   deleteUserFromDB,
+  addOrderIntoDB,
 };
