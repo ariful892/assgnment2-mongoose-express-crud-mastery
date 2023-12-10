@@ -18,6 +18,7 @@ const getSingleUserFromDB = async (userId: string) => {
 
 const deleteUserFromDB = async (userId: string) => {
   const result = await UserModel.updateOne({ userId }, { isDeleted: true });
+
   return result;
 };
 
