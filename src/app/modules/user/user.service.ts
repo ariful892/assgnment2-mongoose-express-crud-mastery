@@ -16,26 +16,14 @@ const getSingleUserFromDB = async (userId: string) => {
   return result;
 };
 
-const updateSingleUserfromDB = async (userId: string) => {
-  const filter = { userId: userId };
-  const update = { $set: { user: 'VALUE' } };
-
-  UserModel.updateOne(
-    filter,
-    update,
-    //  (err:string, result)=> {
-    //   if (err) {
-    //     console.error('Error updating document:', err);
-    //   } else {
-    //     console.log('Update result:', result);
-    //   }
-    // },
-  );
+const deleteUserFromDB = async (userId: string) => {
+  const result = await UserModel.updateOne({ userId }, { isDeleted: true });
+  return result;
 };
 
 export const UserServices = {
   createUserIntoDB,
   getAllUsersFromDB,
   getSingleUserFromDB,
-  updateSingleUserfromDB,
+  deleteUserFromDB,
 };

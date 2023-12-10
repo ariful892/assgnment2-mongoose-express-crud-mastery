@@ -50,6 +50,7 @@ const userValidationSchema = Joi.object({
   hobbies: Joi.array().items(Joi.string()).required(),
   address: addressValidationSchema.required(),
   orders: Joi.array().items(ordersValidationSchema),
+  isDeleted: Joi.boolean(),
 });
 
 export default userValidationSchema;

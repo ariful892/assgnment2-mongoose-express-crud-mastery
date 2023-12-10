@@ -29,4 +29,5 @@ export type User = {
   address: Address;
   orders: Orders[];
   isActive: 'active' | 'inActive';
+  isDeleted: boolean;
 };
