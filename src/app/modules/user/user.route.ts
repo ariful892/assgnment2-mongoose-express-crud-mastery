@@ -15,4 +15,6 @@ router.get('/:userId/orders', UserControllers.getOrders);
 
 router.get('/', UserControllers.getAllUsers);
 
+router.get('/:userId/orders/total-price', UserControllers.getOrdersTotalPrice);
+
 export const UserRoutes = router;

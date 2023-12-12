@@ -127,6 +127,26 @@ const getOrders = async (req: Request, res: Response) => {
   }
 };
 
+const getOrdersTotalPrice = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const result = await UserServices.getOrdersTotalPriceFromDB(userId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Orders total price calculated successfully',
+      data: { totalPrice: result[0]?.totalOrderPrice },
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'Something went wrong!',
+      error: err,
+    });
+  }
+};
+
 export const UserControllers = {
   createUser,
   getAllUsers,
@@ -134,4 +154,5 @@ export const UserControllers = {
   deleteUser,
   addOrder,
   getOrders,
+  getOrdersTotalPrice,
 };
