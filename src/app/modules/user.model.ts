@@ -63,13 +63,10 @@ const userSchema = new Schema<User>({
     type: String,
     required: [true, 'Email is required'],
   },
+
   isActive: {
-    type: String,
-    enum: {
-      values: ['active', 'inActive'],
-      message: 'Status must be either "active" or "inActive"',
-    },
-    required: [true, 'isActive is required'],
+    type: Boolean,
+    default: true,
   },
   hobbies: { type: [String], required: [true, 'Hobbies is required'] },
   address: {
@@ -101,7 +98,7 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 
-// Query midddleware
+// Query middleware
 userSchema.pre('find', function (next) {
   this.find({ isDeleted: { $ne: true } });
 

@@ -28,6 +28,6 @@ export type User = {
   hobbies: string[];
   address: Address;
   orders: Orders[];
-  isActive: 'active' | 'inActive';
+  isActive: boolean;
   isDeleted: boolean;
 };

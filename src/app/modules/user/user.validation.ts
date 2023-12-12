@@ -46,7 +46,7 @@ const userValidationSchema = Joi.object({
     .required()
     .email()
     .message('Email must be a valid email address'),
-  isActive: Joi.string().valid('active', 'inActive').required(),
+  isActive: Joi.boolean(),
   hobbies: Joi.array().items(Joi.string()).required(),
   address: addressValidationSchema.required(),
   orders: Joi.array().items(ordersValidationSchema),
