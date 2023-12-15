@@ -1,6 +1,7 @@
 # Instructions to run the application loacally
 
-1. To create a user follow the format: API (POST): http://localhost:5000/api/users/create-user <br/>  
+1. To create a user follow the format: <br/>
+   API (POST): http://localhost:5000/api/users/create-user <br/>  
    Data format:
 
 ```
@@ -80,8 +81,8 @@
 5. Delete a user <br/>
    API (DELETE): http://localhost:5000/api/users/1
 
-Note : If you delete a user it won't appear in the users list
-After deleting the user you have to add another user to check further section
+- Note : If you delete a user it won't appear in the users list
+  After deleting the user you have to add another user to check further section
 
 ## Bonus section:
 
