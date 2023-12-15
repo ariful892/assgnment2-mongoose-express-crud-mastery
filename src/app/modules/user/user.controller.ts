@@ -21,7 +21,7 @@ const createUser = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: 'User is created successfully',
+      message: 'User created successfully!',
       data: result,
     });
   } catch (err) {
@@ -39,7 +39,7 @@ const getAllUsers = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: 'Users are retrieved successfully',
+      message: 'Users fetched successfully!',
       data: result,
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,11 +57,20 @@ const getSingleUser = async (req: Request, res: Response) => {
     const { userId } = req.params;
     const result = await UserServices.getSingleUserFromDB(userId);
 
-    res.status(200).json({
-      success: true,
-      message: 'User is retrieved successfully',
-      data: result,
-    });
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'User fetched successfully!',
+        data: result,
+      });
+    } else {
+      {
+        res.status(500).json({
+          success: false,
+          message: 'User not found!',
+        });
+      }
+    }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     res.status(500).json({
@@ -72,14 +81,19 @@ const getSingleUser = async (req: Request, res: Response) => {
   }
 };
 
-const deleteUser = async (req: Request, res: Response) => {
+const updateSingleUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
-    const result = await UserServices.deleteUserFromDB(userId);
+    const { user } = req.body;
+    const updateUserInfo = {
+      user,
+      userId,
+    };
+    const result = await UserServices.updateSingleUserFromDB(updateUserInfo);
 
     res.status(200).json({
       success: true,
-      message: 'User is deleted successfully',
+      message: 'User updated successfully!',
       data: result,
     });
   } catch (err) {
@@ -91,20 +105,47 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-const addOrder = async (req: Request, res: Response) => {
-  const { userId } = req.params;
-  const order = req.body.order;
-  const orderInfo = {
-    order,
-    userId,
-  };
-  const result = await UserServices.addOrderIntoDB(orderInfo);
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    await UserServices.deleteUserFromDB(userId);
 
-  res.status(200).json({
-    success: true,
-    message: 'Order added successfully',
-    data: result,
-  });
+    res.status(200).json({
+      success: true,
+      message: 'User deleted successfully!',
+      data: null,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong!',
+      data: err,
+    });
+  }
+};
+
+const addOrder = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const order = req.body.order;
+    const orderInfo = {
+      order,
+      userId,
+    };
+    await UserServices.addOrderIntoDB(orderInfo);
+
+    res.status(200).json({
+      success: true,
+      message: 'Order created successfully!',
+      data: null,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong!',
+      data: err,
+    });
+  }
 };
 
 const getOrders = async (req: Request, res: Response) => {
@@ -131,18 +172,32 @@ const getOrdersTotalPrice = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
     const result = await UserServices.getOrdersTotalPriceFromDB(userId);
-
-    res.status(200).json({
-      success: true,
-      message: 'Orders total price calculated successfully',
-      data: { totalPrice: result[0]?.totalOrderPrice },
-    });
+    console.log(result);
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Orders total price calcutated successfully',
+        data: { totalPrice: result[0]?.totalOrderPrice },
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: err.message || 'Something went wrong!',
-      error: err,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
     });
   }
 };
@@ -151,6 +206,7 @@ export const UserControllers = {
   createUser,
   getAllUsers,
   getSingleUser,
+  updateSingleUser,
   deleteUser,
   addOrder,
   getOrders,

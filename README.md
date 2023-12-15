@@ -1,7 +1,9 @@
 # Instructions to run the application loacally
 
-1. To create a user follow the format: API (POST): http://localhost:5000/api/users/create-user JSON format:
-``````
+1. To create a user follow the format: API (POST): http://localhost:5000/api/users/create-user <br/>  
+   Data format:
+
+```
    {
      "user":{
         "userId": 1,
@@ -31,17 +33,19 @@
      "isDeleted": false
    }
 }
-``````
+```
 
-2. Retrieve a list of all users <br/> 
-API (GET): http://localhost:5000/api/users
+2. Retrieve a list of all users <br/>
+   API (GET): http://localhost:5000/api/users
 
-3. Retrieve a specific user by ID <br/> 
- API (GET): http://localhost:5000/api/users/1
+3. Retrieve a specific user by ID <br/>
+   API (GET): http://localhost:5000/api/users/1
 
-4. To update user information <br/> 
- API (PUT): http://localhost:5000/api/users/1 Data format:
-``````
+4. To update user information <br/>
+   API (PUT): http://localhost:5000/api/users/1 <br/>
+   Data format:
+
+```
  {
    "user":{
       "userId": 1,
@@ -71,31 +75,33 @@ API (GET): http://localhost:5000/api/users
       "isDeleted": false
    }
 }
-``````
+```
 
-5. Delete a user <br/> 
- API (DELETE): http://localhost:5000/api/users/1
+5. Delete a user <br/>
+   API (DELETE): http://localhost:5000/api/users/1
 
 Note : If you delete a user it won't appear in the users list
 After deleting the user you have to add another user to check further section
 
-
 ## Bonus section:
 
-1. Add New Product in Order <br/> 
- API (PUT): http://localhost:5000/api/users/1/order Data format:
- ``````
-{
-    "order":  {
-      "orderId": 101,
-      "product": "Ac",
-      "quantity": 2,
-      "price": 1000
-    }
-}
-``````
-2. Retrieve all orders for a specific user <br/> 
- API (GET): http://localhost:5000/api/users/1/orders
+1. Add New Product in Order <br/>
+   API (PUT): http://localhost:5000/api/users/1/order <br/>
+   Data format:
 
-3. Calculate Total Price of Orders for a Specific User <br/> 
- API (GET): http://localhost:5000/api/users/2/orders/total-price
+```
+{
+   "order":  {
+     "orderId": 101,
+     "product": "Ac",
+     "quantity": 2,
+     "price": 1000
+   }
+}
+```
+
+2. Retrieve all orders for a specific user <br/>
+   API (GET): http://localhost:5000/api/users/1/orders
+
+3. Calculate Total Price of Orders for a Specific User <br/>
+   API (GET): http://localhost:5000/api/users/2/orders/total-price

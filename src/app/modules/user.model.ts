@@ -98,7 +98,14 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 
-// Query middleware
+userSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.password;
+    return ret;
+  },
+});
+
+// Query midddleware
 userSchema.pre('find', function (next) {
   this.find({ isDeleted: { $ne: true } });
 

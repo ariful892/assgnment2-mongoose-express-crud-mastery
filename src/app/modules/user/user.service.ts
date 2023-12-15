@@ -7,14 +7,35 @@ const createUserIntoDB = async (user: User) => {
 };
 
 const getAllUsersFromDB = async () => {
-  const result = await UserModel.find();
+  const result = await UserModel.aggregate().project({
+    username: 1,
+    fullName: 1,
+    age: 1,
+    email: 1,
+    address: 1,
+  });
   return result;
 };
 
 const getSingleUserFromDB = async (userId: string) => {
-  const result = await UserModel.findOne({ userId });
+  const result = await UserModel.findOne({ userId }).select('-password');
 
   // const result = await UserModel.aggregate([{ $match: { userId:userId } }]);
+  console.log(userId);
+
+  return result;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const updateSingleUserFromDB = async (updateUserInfo: any) => {
+  await UserModel.updateOne(
+    { userId: updateUserInfo.userId },
+    { $set: updateUserInfo.user },
+  );
+
+  const result = await UserModel.findOne({
+    userId: updateUserInfo.userId,
+  }).select('-password');
 
   return result;
 };
@@ -35,6 +56,7 @@ const addOrderIntoDB = async (orderInfo: any) => {
       },
     },
   );
+
   return result;
 };
 
@@ -63,6 +85,7 @@ export const UserServices = {
   createUserIntoDB,
   getAllUsersFromDB,
   getSingleUserFromDB,
+  updateSingleUserFromDB,
   deleteUserFromDB,
   addOrderIntoDB,
   getOrdersFromDB,
