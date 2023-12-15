@@ -20,9 +20,6 @@ const getAllUsersFromDB = async () => {
 const getSingleUserFromDB = async (userId: string) => {
   const result = await UserModel.findOne({ userId }).select('-password');
 
-  // const result = await UserModel.aggregate([{ $match: { userId:userId } }]);
-  console.log(userId);
-
   return result;
 };
 

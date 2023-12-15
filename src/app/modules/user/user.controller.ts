@@ -172,7 +172,7 @@ const getOrdersTotalPrice = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
     const result = await UserServices.getOrdersTotalPriceFromDB(userId);
-    console.log(result);
+
     if (result) {
       res.status(200).json({
         success: true,
